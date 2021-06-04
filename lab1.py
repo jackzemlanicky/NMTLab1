@@ -1,17 +1,16 @@
-import numpy
+import array as arr
 
+# Initialize our integer array
+intArray= arr.array('i')
 # Get the file as a byte stream
-intArray=[]
 pdfFile = open('Sample.pdf','rb')
 print(type(pdfFile))
 # Get the array of bytes from the stream
 byteArray = pdfFile.read()
-# Print out whole file (in this case, it is a blank pdf so just header info)
-print(byteArray)
-# When I print it one character at a time, it gives me the ascii value (an int) but printing anything more than one character gives me the actual text
-print(byteArray[0])
-# Print length of the file (in bytes)
-print(len(byteArray))
-
-
+# Put the individual bytes (ascii values) into an array
+for byte in byteArray:
+    intArray.append(byte)
+# Save the size of the file in bytes (1 byte = 1 value in the array) for later use
+file_size = intArray.__len__()
+# Now, all values in intArray are between 0 and 255, each one representing a single byte from the pdf file
 pdfFile.close()
