@@ -5,23 +5,23 @@ Contributors: Bill Luo
 '''
 import array as arr
 from PIL import Image
+from numpy import ceil, sqrt
 
 # variables
 
-# The final value for our square, set the initial square to 25 (blank pdf file is about 800 bytes)
-# Confused as to how I can update this global variable from inside the while loop in my find_next_square function
-final_square = 25
+
 # functions
 
 # Pad extra zeroes to get to the next square (for the image)
 def pad_zeroes(int_array):
-    while int_array.__len__()<final_square*final_square:
+    while int_array.__len__()<width**2:
         int_array.append(0)
 
 # Given the size of the file, find the next square number 
-def find_next_square(size,final_square):
-    while size<final_square*final_square:
-        final_square+=1
+def find_next_square(size):
+    # ceiling value so it is always >= the size of the file, never smaller
+    return int(ceil(sqrt(size)))
+
 # Initialize our integer array
 int_array= arr.array('i')
 # Get the file as a byte stream
@@ -33,12 +33,14 @@ for byte in byteArray:
     int_array.append(byte)
 # Now, all values in int_array are between 0 and 255, each one representing a single byte from the pdf file
 # Get the size of our grayscale image based on the size of the PDF
-find_next_square(int_array.__len__(),final_square)
+width=find_next_square(int_array.__len__())
+print(width)
+print(type(width))
 # Pad on appropriate amount of zeroes to the image
 pad_zeroes(int_array)
 
-
-img = Image.new('L',final_square,final_square)
+# Create our image in grayscale, 8 bits per pixel
+img = Image.new('L',(width,width))
 img.putdata(int_array)
 img.save('plswork.png')
 pdfFile.close()
