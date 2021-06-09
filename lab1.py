@@ -51,6 +51,6 @@ if given_width >= sqrt(int_array.__len__()):
 # Else the given width is smaller than the sqrt of the length of the array, so we need to first create the image normally, then compress the newly created image to the desired width
 else:
     width = find_next_square(int_array.__len__())
-    pad_zeroes(int_array)
+    pad_zeroes(int_array,width)
     draw_image(int_array,width)
     compress_image()
