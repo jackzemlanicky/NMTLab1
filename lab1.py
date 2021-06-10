@@ -9,7 +9,8 @@ from numpy import ceil, sqrt
 import cv2
 
 # variables
-given_width = 25
+pdf_name= 'Paper2.pdf'
+given_width = 256
 
 # functions
 
@@ -28,17 +29,19 @@ def draw_image(int_array,width):
     img = Image.new('L',(width,width))
     img.putdata(int_array)
     img.save('grayscale.png')
-    pdfFile.close()
+    # pdfFile.close()
 
 # Takes the larger image and scales it down to the given width
 def compress_image():
     img = cv2.imread('grayscale.png',cv2.IMREAD_UNCHANGED)
-    cv2.resize(img,(given_width,given_width))
+    dimension = (given_width,given_width)
+    img = cv2.resize(img,dimension)
+    print("Resized dimensions: ",img.shape)
 
 # Initialize our integer array
 int_array = arr.array('i')
 # Get the file as a byte stream
-pdfFile = open('Sample.pdf','rb')
+pdfFile = open(pdf_name,'rb')
 # Get the array of bytes from the stream
 byteArray = pdfFile.read()
 # Put the individual bytes (ascii values) into an array
