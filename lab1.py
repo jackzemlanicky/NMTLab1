@@ -29,13 +29,14 @@ def draw_image(int_array,width):
     img = Image.new('L',(width,width))
     img.putdata(int_array)
     img.save('grayscale.png')
-    # pdfFile.close()
+    pdfFile.close()
 
 # Takes the larger image and scales it down to the given width
 def compress_image():
     img = cv2.imread('grayscale.png',cv2.IMREAD_UNCHANGED)
     dimension = (given_width,given_width)
     img = cv2.resize(img,dimension)
+    cv2.imwrite('grayscale.png',img)
     print("Resized dimensions: ",img.shape)
 
 # Initialize our integer array
